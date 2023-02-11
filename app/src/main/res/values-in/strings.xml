@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyStoryApp</string>
+    <string name="my_story">Cerita Ku</string>
+    <string name="login_info">Ayo Login dulu, sebelum baca cerita yang menarik!</string>
+    <string name="logo_desc">Logo Aplikasi</string>
+    <string name="login">Masuk</string>
+    <string name="email">Email</string>
+    <string name="sandi">Sandi</string>
+    <string name="error_text">Sandi harus terdiri dari 8 karakter atau lebih</string>
+    <string name="no_account_text">Belum punya akun? yuk daftar!</string>
+    <string name="register_info">Silahkan isikan datamu ya!</string>
+    <string name="register">Daftar</string>
+    <string name="name">Nama</string>
+    <string name="logo_registrasi">Logo Registrasi</string>
+    <string name="add_story">Tambah Cerita</string>
+    <string name="logout">Keluar</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="description">Deskripsi</string>
+    <string name="add">Tambah</string>
+    <string name="error_email">Masukkan Email</string>
+    <string name="error_login">Terjadi Kesalahan: %1$s</string>
+    <string name="error_name">Masukkan Nama</string>
+    <string name="choose_a_picture">Pilih sebuah gambar</string>
+    <string name="description_fill_error">Tolong isi data yang kosong!</string>
+    <string name="list_stories">Daftar Cerita</string>
+    <string name="story_detail">Detil Cerita</string>
+    <string name="change_lang">Ganti Bahasa</string>
+    <string name="email_invalid">Email tidak valid!</string>
+    <string name="name_blank">Nama tidak boleh kosong!</string>
+    <string name="login_error">Tolong isi email dan sandi!</string>
+    <string name="register_error">Tolong isi nama, email, dan sandi!</string>
+    <string name="no_stories_found">Tidak ada cerita yang ditemukan</string>
+    <string name="the_picture_that_will_be_added">Gambar yang akan ditambahkan</string>
+    <string name="no_location_found">Lokasi tidak ditemukan</string>
+</resources>

@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">MyStoryApp</string>
+    <string name="my_story">My Story</string>
+    <string name="logo_desc">Application Logo</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="sandi">Password</string>
+    <string name="error_text">Password must have more or atleast 8 character</string>
+    <string name="no_account_text">No account, yet? let\'s signup!</string>
+    <string name="register_info">Please fill in your data, okay!</string>
+    <string name="register">Signup</string>
+    <string name="name">Name</string>
+    <string name="logo_registrasi">Signup Logo</string>
+    <string name="add_story">Add a Story</string>
+    <string name="logout">Logout</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="description">Description</string>
+    <string name="add">Add</string>
+    <string name="error_email">Input an Email</string>
+    <string name="error_login">There\'s some mistake: %1$s</string>
+    <string name="error_name">Input a Name</string>
+    <string name="choose_a_picture">Choose a Picture</string>
+    <string name="description_fill_error">Please, fill the blank field!</string>
+    <string name="list_stories">List Of Stories</string>
+    <string name="story_detail">The Story Detail</string>
+    <string name="change_lang">Change Language</string>
+    <string name="login_info">Let\'s sign in first, before reading an interesting story!</string>
+    <string name="email_invalid">The email is not valid!</string>
+    <string name="name_blank">The name must not blank!</string>
+    <string name="login_error">Please, fill in the email and password!</string>
+    <string name="register_error">Please, fill in the name, email, and password!</string>
+    <string name="no_stories_found">No stories found</string>
+    <string name="the_picture_that_will_be_added">The Picture that will be added</string>
+    <string name="no_location_found">No Location Found</string>
+    <string name="address">Address</string>
+</resources>
