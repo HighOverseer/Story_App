@@ -34,4 +34,11 @@
     <string name="no_stories_found">Tidak ada cerita yang ditemukan</string>
     <string name="the_picture_that_will_be_added">Gambar yang akan ditambahkan</string>
     <string name="no_location_found">Lokasi tidak ditemukan</string>
+
+    <string name="address">Alamat</string>
+    <string name="List">Daftar Cerita</string>
+    <string name="Map">Map</string>
+    <string name="style_parsing_failed">Gagal mem-parsing gaya</string>
+    <string name="users_stories">Daftar cerita dari %1$s</string>
+    <string name="post">post</string>
 </resources>

@@ -33,6 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures{
         viewBinding true
     }
@@ -92,5 +93,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:3.12.4'
 
     testImplementation 'org.robolectric:robolectric:4.9' // RoboelectricRunner
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }

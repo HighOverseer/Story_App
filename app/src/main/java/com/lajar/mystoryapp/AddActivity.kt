@@ -13,9 +13,7 @@ import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.ImageView
-import android.widget.RadioGroup.OnCheckedChangeListener
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -133,13 +131,13 @@ class AddActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_tambah, menu)
-        btnAddStory = menu?.findItem(R.id.button_add)
+        menuInflater.inflate(R.menu.menu_post, menu)
+        btnAddStory = menu?.findItem(R.id.button_postStory)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.button_add) {
+        if (item.itemId == R.id.button_postStory) {
             uploadStory()
         } else if (item.itemId == android.R.id.home) {
             finish()

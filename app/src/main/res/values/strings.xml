@@ -34,4 +34,9 @@
     <string name="the_picture_that_will_be_added">The Picture that will be added</string>
     <string name="no_location_found">No Location Found</string>
     <string name="address">Address</string>
+    <string name="List">List</string>
+    <string name="Map">Map</string>
+    <string name="style_parsing_failed">Style parsing failed</string>
+    <string name="users_stories">%1$s\'s Stories</string>
+    <string name="post">post</string>
 </resources>

@@ -10,7 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:transitionName="scroll">
 
         <ImageView
             android:id="@+id/iv_detail_photo"
@@ -67,6 +68,7 @@
             android:background="@drawable/tv_detail_bg"
             android:fontFamily="@font/poppins_regular"
             android:maxLines="1"
+            android:transitionName="description"
             android:paddingHorizontal="14dp"
             android:textColor="@color/white_min30"
             android:textSize="18sp"

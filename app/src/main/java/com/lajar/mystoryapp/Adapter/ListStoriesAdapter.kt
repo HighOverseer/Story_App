@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.lajar.mystoryapp.DetailActivity
 import com.lajar.mystoryapp.Model.Story
 import com.lajar.mystoryapp.databinding.ItemStoryBinding
 
@@ -17,7 +18,7 @@ class ListStoriesAdapter(
     private var stories: List<Story>,
     private val onItemGetClicked: OnItemGetClicked
 ) : RecyclerView.Adapter<ListStoriesAdapter.ListStoriesViewHolder>() {
-
+    
     var isAnItemHasBeenClicked = false
 
     inner class ListStoriesViewHolder(
@@ -36,8 +37,9 @@ class ListStoriesAdapter(
         private fun getSharedElementTransition(): ActivityOptionsCompat {
             return ActivityOptionsCompat.makeSceneTransitionAnimation(
                 itemView.context as Activity,
-                Pair(binding.ivItemPhoto, SHARED_ELEMENT_1),
-                Pair(binding.tvItemName, SHARED_ELEMENT_2)
+                Pair(binding.root, DetailActivity.SHARED_ELEMENT_1),
+                Pair(binding.ivItemPhoto, DetailActivity.SHARED_ELEMENT_2),
+                Pair(binding.tvItemName, DetailActivity.SHARED_ELEMENT_3)
             )
         }
 
@@ -50,6 +52,8 @@ class ListStoriesAdapter(
         }
     }
 
+
+
     override fun onBindViewHolder(holder: ListStoriesViewHolder, position: Int) {
         val currentItem = stories[position]
         holder.binding.apply {
@@ -58,7 +62,9 @@ class ListStoriesAdapter(
         }
     }
 
+
     override fun getItemCount() = stories.size
+
 
     private fun ImageView.loadPhoto(photo: String, context: Context) {
         Glide.with(context)
@@ -75,8 +81,5 @@ class ListStoriesAdapter(
         fun onClick(story: Story, sharedElementTransition: ActivityOptionsCompat)
     }
 
-    companion object {
-        private const val SHARED_ELEMENT_1 = "image"
-        private const val SHARED_ELEMENT_2 = "name"
-    }
+
 }

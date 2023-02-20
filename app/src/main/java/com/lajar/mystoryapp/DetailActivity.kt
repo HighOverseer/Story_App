@@ -11,8 +11,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.lajar.mystoryapp.Helper.Helper
 import com.lajar.mystoryapp.Model.Story
 import com.lajar.mystoryapp.ViewModel.DetailViewModel
@@ -20,8 +18,6 @@ import com.lajar.mystoryapp.ViewModel.ViewModelFactory
 import com.lajar.mystoryapp.databinding.ActivityDetailBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.IOException
 import java.util.*
 
 class DetailActivity : AppCompatActivity() {
@@ -33,6 +29,10 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_STORY = "story"
+        const val SHARED_ELEMENT_1 = "scroll"
+        const val SHARED_ELEMENT_2 = "image"
+        const val SHARED_ELEMENT_3 = "name"
+        const val SHARED_ELEMENT_4 = "description"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +56,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            finish()
+            onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }

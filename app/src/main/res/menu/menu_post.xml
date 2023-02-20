@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/button_add"
+        android:id="@+id/button_postStory"
         android:icon="@drawable/baseline_check_24"
-        android:title="@string/add"
+        android:title="@string/post"
         app:showAsAction="always" />
 </menu>
