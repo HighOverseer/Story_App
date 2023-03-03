@@ -28,7 +28,7 @@ class HelperTest{
     @Test
     fun `When Given Coordinate Should Return Address If Lat & Lon Not Null`() = runTest{
         val listAddress = listOf(address)
-        val expectedAddressLine = DataDummy.dummyAddressLine
+        val expectedAdress = "${DataDummy.dummyAdminArea}, ${DataDummy.dummyCountryName}"
 
         `when`(
             geocoder.getFromLocation(
@@ -39,12 +39,13 @@ class HelperTest{
         ).thenReturn(
             listAddress
         )
-        `when`(listAddress[0].getAddressLine(0)).thenReturn(expectedAddressLine)
+        `when`(listAddress[0].adminArea).thenReturn(DataDummy.dummyAdminArea)
+        `when`(listAddress[0].countryName).thenReturn(DataDummy.dummyCountryName)
 
-        assertEquals(Helper.convertToAddressLine(DataDummy.dummyLat, DataDummy.dummyLon, geocoder, "No Location Found"), expectedAddressLine)
-        assertEquals(Helper.convertToAddressLine(DataDummy.dummyLat, null, geocoder, "No Location Found"), "No Location Found")
-        assertEquals(Helper.convertToAddressLine(null, DataDummy.dummyLon, geocoder, "No Location Found"), "No Location Found")
-        assertEquals(Helper.convertToAddressLine(null, null, geocoder, "No Location Found"), "No Location Found")
+        assertEquals(expectedAdress, Helper.convertToAddressLine(DataDummy.dummyLat, DataDummy.dummyLon, geocoder, "No Location Found"))
+        assertEquals("No Location Found", Helper.convertToAddressLine(DataDummy.dummyLat, null, geocoder, "No Location Found"))
+        assertEquals("No Location Found", Helper.convertToAddressLine(null, DataDummy.dummyLon, geocoder, "No Location Found"))
+        assertEquals("No Location Found", Helper.convertToAddressLine(null, null, geocoder, "No Location Found"))
     }
 
     @Test
@@ -52,10 +53,10 @@ class HelperTest{
         val expectedAddress = DataDummy.dummyAddres
         val listAddress = listOf(expectedAddress)
 
-        `when`(geocoder.getFromLocationName(DataDummy.dummyAddressLine, 1)).thenReturn(listAddress)
+        `when`(geocoder.getFromLocationName(DataDummy.dummyAdminArea, 1)).thenReturn(listAddress)
         `when`(geocoder.getFromLocationName("", 1)).thenReturn(listOf<Address>())
 
-        assertEquals(expectedAddress, Helper.convertToPosition(DataDummy.dummyAddressLine, geocoder))
+        assertEquals(expectedAddress, Helper.convertToPosition(DataDummy.dummyAdminArea, geocoder))
         assertNull(Helper.convertToPosition("", geocoder))
     }
 

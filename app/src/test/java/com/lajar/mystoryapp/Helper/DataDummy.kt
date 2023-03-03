@@ -1,12 +1,31 @@
 package com.lajar.mystoryapp.Helper
 
 import android.location.Address
-import org.junit.runner.RunWith
+import com.lajar.mystoryapp.data.local.entity.Story
 import java.util.*
 
 object DataDummy {
+    fun generatDummyStories():List<Story>{
+        val stories = mutableListOf<Story>()
+        for (i in 0..99){
+            stories.add(
+                Story(
+                    i.toString(),
+                    "name ${i+1}",
+                    "desc ${i+1}",
+                    "url ${i+1}",
+                    i.toFloat(),
+                    i.toFloat()
+                )
+            )
+        }
+        return stories
+    }
+
     val dummyAddres = Address(Locale.getDefault())
-    val dummyAddressLine = "Orchid Forest Cikole, Genteng, Cikole, Kec. Lembang, Kabupaten Bandung Barat, Jawa Barat 40391, Indonesia"
-    val dummyLat:Float = -6.780725f
-    val dummyLon:Float = 107.637409f
+    const val dummyAdminArea = "Jawa Barat"
+    const val dummyCountryName = "Indonesia"
+    const val dummyLat:Float = -6.780725f
+    const val dummyLon:Float = 107.637405f
+
 }

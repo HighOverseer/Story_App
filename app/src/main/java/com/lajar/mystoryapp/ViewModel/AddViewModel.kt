@@ -1,7 +1,5 @@
 package com.lajar.mystoryapp.ViewModel
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,8 +10,7 @@ import kotlinx.coroutines.launch
 import com.lajar.mystoryapp.data.Result
 import java.io.File
 
-class AddViewModel(dataStore: DataStore<Preferences>) : ViewModel() {
-    private val storyRepository = StoryRepository.getInstance(dataStore)
+class AddViewModel(private val storyRepository: StoryRepository) : ViewModel() {
 
     private val _currentImage = MutableLiveData<File>()
     val currentImage: LiveData<File> = _currentImage

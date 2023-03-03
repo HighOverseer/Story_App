@@ -60,7 +60,7 @@ class Splash : AppCompatActivity() {
         activity: AppCompatActivity,
         dataStore: DataStore<Preferences>
     ): SplashViewModel {
-        val factory = ViewModelFactory.getInstance(dataStore)
+        val factory = ViewModelFactory.getInstance(activity.application, dataStore)
         return ViewModelProvider(activity, factory)[SplashViewModel::class.java]
     }
 

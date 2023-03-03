@@ -13,7 +13,6 @@ import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.io.OutputStream
 
 object Helper {
@@ -56,37 +55,44 @@ object Helper {
         return file
     }
 
-    suspend fun convertToAddressLine(lat:Float?, lon:Float?, geocoder: Geocoder, addressNameDefault:String) = withContext(
-        Dispatchers.IO){
+    suspend fun convertToAddressLine(
+        lat: Float?,
+        lon: Float?,
+        geocoder: Geocoder,
+        addressNameDefault: String
+    ) = withContext(
+        Dispatchers.IO
+    ) {
         var addressName = addressNameDefault
-        if (lat != null && lon != null){
+        if (lat != null && lon != null) {
             try {
                 val list = geocoder.getFromLocation(lat.toDouble(), lon.toDouble(), 1)
                 println("lat: $lat, lon: $lon")
-                if (list != null && list.size!=0){
+                if (list != null && list.size != 0) {
                     addressName = "${list[0].adminArea}, ${list[0].countryName}"
                     addressName
                 } else {
                     addressName
                 }
-            }catch (e: IOException){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 addressName
             }
         } else addressName
     }
 
-    suspend fun convertToPosition(addressLine:String, geocoder: Geocoder):Address? = withContext(Dispatchers.IO){
-        try {
-            val listAddress = geocoder.getFromLocationName(addressLine, 1)
-            if (listAddress != null && listAddress.size != 0){
-                listAddress[0]
-            }else{
+    suspend fun convertToPosition(addressLine: String, geocoder: Geocoder): Address? =
+        withContext(Dispatchers.IO) {
+            try {
+                val listAddress = geocoder.getFromLocationName(addressLine, 1)
+                if (listAddress != null && listAddress.size != 0) {
+                    listAddress[0]
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
                 null
             }
-        }catch (e:Exception){
-            e.printStackTrace()
-            null
         }
-    }
 }

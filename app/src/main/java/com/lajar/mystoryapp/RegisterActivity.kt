@@ -59,7 +59,7 @@ class RegisterActivity : AppCompatActivity() {
         activity: AppCompatActivity,
         dataStore: DataStore<Preferences>
     ): RegisterViewModel {
-        val factory = ViewModelFactory.getInstance(dataStore)
+        val factory = ViewModelFactory.getInstance(activity.application, dataStore)
         return ViewModelProvider(activity, factory)[RegisterViewModel::class.java]
     }
 

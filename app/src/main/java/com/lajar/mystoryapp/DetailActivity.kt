@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.lajar.mystoryapp.Helper.Helper
-import com.lajar.mystoryapp.Model.Story
+import com.lajar.mystoryapp.data.local.entity.Story
 import com.lajar.mystoryapp.ViewModel.DetailViewModel
 import com.lajar.mystoryapp.ViewModel.ViewModelFactory
 import com.lajar.mystoryapp.databinding.ActivityDetailBinding
@@ -25,7 +25,7 @@ class DetailActivity : AppCompatActivity() {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("user_info")
     private lateinit var detailViewModel: DetailViewModel
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var geoCoder:Geocoder
+    private lateinit var geocoder: Geocoder
 
     companion object {
         const val EXTRA_STORY = "story"
@@ -48,10 +48,10 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun init(){
+    private fun init() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         detailViewModel = obtainViewModel(this, dataStore)
-        geoCoder = Geocoder(this, Locale.getDefault())
+        geocoder = Geocoder(this, Locale.getDefault())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -68,7 +68,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setLayout(story: Story) = lifecycleScope.launch(Dispatchers.Main){
+    private fun setLayout(story: Story) = lifecycleScope.launch(Dispatchers.Main) {
         binding.apply {
             Glide.with(this@DetailActivity)
                 .load(story.photoUrl)
@@ -77,7 +77,7 @@ class DetailActivity : AppCompatActivity() {
             tvDetailLocation.text = Helper.convertToAddressLine(
                 story.lat,
                 story.lon,
-                geoCoder,
+                geocoder,
                 getString(R.string.no_location_found)
             )
             tvDetailDescription.text = story.description
@@ -89,7 +89,7 @@ class DetailActivity : AppCompatActivity() {
         activity: AppCompatActivity,
         dataStore: DataStore<Preferences>
     ): DetailViewModel {
-        val factory = ViewModelFactory.getInstance(dataStore)
+        val factory = ViewModelFactory.getInstance(activity.application, dataStore)
         return ViewModelProvider(activity, factory)[DetailViewModel::class.java]
 
     }

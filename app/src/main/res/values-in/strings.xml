@@ -19,9 +19,6 @@
     <string name="gallery">Galeri</string>
     <string name="description">Deskripsi</string>
     <string name="add">Tambah</string>
-    <string name="error_email">Masukkan Email</string>
-    <string name="error_login">Terjadi Kesalahan: %1$s</string>
-    <string name="error_name">Masukkan Nama</string>
     <string name="choose_a_picture">Pilih sebuah gambar</string>
     <string name="description_fill_error">Tolong isi data yang kosong!</string>
     <string name="list_stories">Daftar Cerita</string>
@@ -30,15 +27,21 @@
     <string name="email_invalid">Email tidak valid!</string>
     <string name="name_blank">Nama tidak boleh kosong!</string>
     <string name="login_error">Tolong isi email dan sandi!</string>
-    <string name="register_error">Tolong isi nama, email, dan sandi!</string>
-    <string name="no_stories_found">Tidak ada cerita yang ditemukan</string>
     <string name="the_picture_that_will_be_added">Gambar yang akan ditambahkan</string>
     <string name="no_location_found">Lokasi tidak ditemukan</string>
-
     <string name="address">Alamat</string>
-    <string name="List">Daftar Cerita</string>
+    <string name="stories">Cerita</string>
     <string name="Map">Map</string>
     <string name="style_parsing_failed">Gagal mem-parsing gaya</string>
     <string name="users_stories">Daftar cerita dari %1$s</string>
     <string name="post">post</string>
+    <string name="stories_updated_to_map">Cerita Ditambahkan ke Map</string>
+    <string name="data_is_null">Data tidak ditemukan</string>
+    <string name="retry">coba lagi</string>
+    <string name="connection_lost_info">Koneksi Hilang</string>
+    <string name="internet_detected_info">Koneksi internet terdeteksi, sedang merefresh..</string>
+    <string name="auto_detect_used">Lokasi otomatis dideteksi digunakan</string>
+    <string name="auto_detect_is_not_used">Lokasi otomatis dideteksi digunakan</string>
+    <string name="location_is_not_permitted">Tidak dapat mengakses lokasi, izin tidak diberikan</string>
+    <string name="about">Tentang</string>
 </resources>

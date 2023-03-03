@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_list"
+        android:icon="@drawable/baseline_format_list_bulleted_24"
+        android:title="@string/stories"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/nav_map"
+        android:icon="@drawable/baseline_map_24"
+        android:title="@string/Map"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="@string/about"
+        app:showAsAction="ifRoom"/>
+
+</menu>

@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -73,12 +74,12 @@ class MyPassEditText : TextInputEditText, View.OnTouchListener {
         super.onDraw(canvas)
         if (compoundDrawables[0] != null) {
             mPaint.apply {
-                textSize = 30F
+                textSize = 11F.toSp()
                 color = ResourcesCompat.getColor(resources, R.color.red_700, null)
                 typeface = ResourcesCompat.getFont(context, R.font.poppins_regular)
             }
-            val x = 120F
-            val y = 135F
+            val x = 46F.toDp()
+            val y = 52F.toDp()
             canvas?.drawText(context.resources.getString(R.string.error_text), x, y, mPaint)
         }
 
@@ -184,5 +185,12 @@ class MyPassEditText : TextInputEditText, View.OnTouchListener {
         )
     }
 
+    private fun Float.toDp():Float{
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
+    }
+
+    private fun Float.toSp():Float{
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
+    }
 
 }

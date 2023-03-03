@@ -17,9 +17,6 @@
     <string name="gallery">Gallery</string>
     <string name="description">Description</string>
     <string name="add">Add</string>
-    <string name="error_email">Input an Email</string>
-    <string name="error_login">There\'s some mistake: %1$s</string>
-    <string name="error_name">Input a Name</string>
     <string name="choose_a_picture">Choose a Picture</string>
     <string name="description_fill_error">Please, fill the blank field!</string>
     <string name="list_stories">List Of Stories</string>
@@ -29,14 +26,21 @@
     <string name="email_invalid">The email is not valid!</string>
     <string name="name_blank">The name must not blank!</string>
     <string name="login_error">Please, fill in the email and password!</string>
-    <string name="register_error">Please, fill in the name, email, and password!</string>
-    <string name="no_stories_found">No stories found</string>
     <string name="the_picture_that_will_be_added">The Picture that will be added</string>
     <string name="no_location_found">No Location Found</string>
     <string name="address">Address</string>
-    <string name="List">List</string>
+    <string name="stories">Stories</string>
     <string name="Map">Map</string>
     <string name="style_parsing_failed">Style parsing failed</string>
     <string name="users_stories">%1$s\'s Stories</string>
     <string name="post">post</string>
+    <string name="stories_updated_to_map">Stories with Location Added To Map</string>
+    <string name="data_is_null">Data not found</string>
+    <string name="retry">retry</string>
+    <string name="connection_lost_info">Connection Lost</string>
+    <string name="internet_detected_info">Internet connection detected, refreshing page..</string>
+    <string name="auto_detect_used">Auto detect location used</string>
+    <string name="auto_detect_is_not_used">Auto detect location is not used</string>
+    <string name="location_is_not_permitted">Can\'t access location, permissions is not granted</string>
+    <string name="about">About</string>
 </resources>

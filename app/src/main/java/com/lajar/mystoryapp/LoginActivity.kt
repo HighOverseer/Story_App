@@ -13,6 +13,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.lajar.mystoryapp.Helper.wrapEspressoIdlingResource
 import com.lajar.mystoryapp.ViewModel.LoginViewModel
 import com.lajar.mystoryapp.ViewModel.ViewModelFactory
 import com.lajar.mystoryapp.data.Event
@@ -68,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
         activity: AppCompatActivity,
         dataStore: DataStore<Preferences>
     ): LoginViewModel {
-        val factory = ViewModelFactory.getInstance(dataStore)
+        val factory = ViewModelFactory.getInstance(activity.application, dataStore)
         return ViewModelProvider(activity, factory)[LoginViewModel::class.java]
     }
 

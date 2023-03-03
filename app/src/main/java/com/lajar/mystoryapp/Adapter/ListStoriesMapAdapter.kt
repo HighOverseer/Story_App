@@ -9,20 +9,27 @@ import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lajar.mystoryapp.DetailActivity
-import com.lajar.mystoryapp.Model.Story
+import com.lajar.mystoryapp.R
+import com.lajar.mystoryapp.data.local.entity.Story
 import com.lajar.mystoryapp.databinding.ItemCurrentUsersStoriesBinding
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ListStoriesMapAdapter(private var stories:List<Story>, private val onItemGetClicked: ListStoriesAdapter.OnItemGetClicked):RecyclerView.Adapter<ListStoriesMapAdapter.ListStoriesMapViewHolder>() {
+class ListStoriesMapAdapter(
+    private var stories: List<Story>,
+    private val onItemGetClicked: ListStoriesAdapter.OnItemGetClicked
+) : RecyclerView.Adapter<ListStoriesMapAdapter.ListStoriesMapViewHolder>() {
 
     var isAnItemHasBeenClicked = false
 
-    inner class ListStoriesMapViewHolder(val binding: ItemCurrentUsersStoriesBinding, clickedAtPosition:(Int, ActivityOptionsCompat) -> Unit):RecyclerView.ViewHolder(binding.root){
+    inner class ListStoriesMapViewHolder(
+        val binding: ItemCurrentUsersStoriesBinding,
+        clickedAtPosition: (Int, ActivityOptionsCompat) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            itemView.setOnClickListener{
-                if (!isAnItemHasBeenClicked){
+            itemView.setOnClickListener {
+                if (!isAnItemHasBeenClicked) {
                     isAnItemHasBeenClicked = true
-                    clickedAtPosition(adapterPosition, getSharedElementTransition())
+                    clickedAtPosition(absoluteAdapterPosition, getSharedElementTransition())
                 }
             }
         }
@@ -37,8 +44,12 @@ class ListStoriesMapAdapter(private var stories:List<Story>, private val onItemG
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListStoriesMapViewHolder {
-        val binding = ItemCurrentUsersStoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ListStoriesMapViewHolder(binding){itemClickedPosition, sharedElementTransition ->
+        val binding = ItemCurrentUsersStoriesBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ListStoriesMapViewHolder(binding) { itemClickedPosition, sharedElementTransition ->
             onItemGetClicked.onClick(stories[itemClickedPosition], sharedElementTransition)
         }
     }
@@ -51,15 +62,17 @@ class ListStoriesMapAdapter(private var stories:List<Story>, private val onItemG
         }
     }
 
-    private fun CircleImageView.loadPhoto(context:Context, photo:String){
+    private fun CircleImageView.loadPhoto(context: Context, photo: String) {
         Glide.with(context)
             .load(photo)
+            .placeholder(R.drawable.ic_baseline_image_24)
+            .error(R.drawable.image_error)
             .into(this)
     }
 
-    override fun getItemCount()=stories.size
+    override fun getItemCount() = stories.size
 
-    fun updateList(stories: List<Story>){
+    fun updateList(stories: List<Story>) {
         this.stories = stories
     }
 }

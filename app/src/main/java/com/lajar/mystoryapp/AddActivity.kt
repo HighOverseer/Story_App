@@ -80,15 +80,20 @@ class AddActivity : AppCompatActivity() {
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
-    ){ permissions ->
-        when{
-            permissions[android.Manifest.permission.ACCESS_COARSE_LOCATION]?:false ->{
+    ) { permissions ->
+        when {
+            permissions[android.Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
                 uploadStory()
             }
-            permissions[android.Manifest.permission.ACCESS_FINE_LOCATION]?:false ->{
+            permissions[android.Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
                 uploadStory()
-            }else ->{
-                Toast.makeText(this, "Can't access location, permissions is not granted", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(
+                    this,
+                    getString(R.string.location_is_not_permitted),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -123,7 +128,7 @@ class AddActivity : AppCompatActivity() {
 
     }
 
-    private fun init(){
+    private fun init() {
         addViewModel = obtainViewModel(this, dataStore)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -171,7 +176,7 @@ class AddActivity : AppCompatActivity() {
     }
 
 
-    private fun uploadStory() = lifecycleScope.launch(Dispatchers.Main){
+    private fun uploadStory() = lifecycleScope.launch(Dispatchers.Main) {
         binding.apply {
             val desc = edAddDescription.text.toString()
             when {
@@ -181,15 +186,20 @@ class AddActivity : AppCompatActivity() {
                         getString(R.string.description_fill_error)
                 }
                 else -> {
-                    if (!switchAutoLocation.isChecked && edAddLocation.text.isBlank()){
+                    if (!switchAutoLocation.isChecked && edAddLocation.text.isBlank()) {
                         addViewModel.uploadStory(desc, null, null)
                     } else if (switchAutoLocation.isChecked) {
                         uploadStoryWithAutoLoc(fusedLocationProviderClient, desc)
-                    }else{
-                        val address = Helper.convertToPosition(edAddLocation.text.toString(), geocoder)
-                        if (address != null){
-                            addViewModel.uploadStory(desc, address.latitude.toFloat(), address.longitude.toFloat())
-                        }else{
+                    } else {
+                        val address =
+                            Helper.convertToPosition(edAddLocation.text.toString(), geocoder)
+                        if (address != null) {
+                            addViewModel.uploadStory(
+                                desc,
+                                address.latitude.toFloat(),
+                                address.longitude.toFloat()
+                            )
+                        } else {
                             addViewModel.uploadStory(desc, null, null)
                         }
 
@@ -244,7 +254,7 @@ class AddActivity : AppCompatActivity() {
         activity: AppCompatActivity,
         dataStore: DataStore<Preferences>
     ): AddViewModel {
-        val factory = ViewModelFactory.getInstance(dataStore)
+        val factory = ViewModelFactory.getInstance(activity.application, dataStore)
         return ViewModelProvider(activity, factory)[AddViewModel::class.java]
     }
 
@@ -256,26 +266,33 @@ class AddActivity : AppCompatActivity() {
     }
 
 
-    private fun uploadStoryWithAutoLoc(fusedLocationProviderClient: FusedLocationProviderClient, desc:String){
+    private fun uploadStoryWithAutoLoc(
+        fusedLocationProviderClient: FusedLocationProviderClient,
+        desc: String
+    ) {
         if (
             checkPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) &&
             checkPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
-        ){
+        ) {
             fusedLocationProviderClient.lastLocation.apply {
-                addOnSuccessListener {location ->
-                    if (location!=null) {
-                        addViewModel.uploadStory(desc, location.latitude.toFloat(), location.longitude.toFloat())
-                    }else{
+                addOnSuccessListener { location ->
+                    if (location != null) {
+                        addViewModel.uploadStory(
+                            desc,
+                            location.latitude.toFloat(),
+                            location.longitude.toFloat()
+                        )
+                    } else {
                         addViewModel.uploadStory(desc, null, null)
                     }
                 }
-                addOnFailureListener {exception ->
+                addOnFailureListener { exception ->
                     exception.printStackTrace()
                     addViewModel.uploadStory(desc, null, null)
                 }
 
             }
-        }else{
+        } else {
             requestPermissionLauncher.launch(
                 arrayOf(
                     android.Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -286,15 +303,19 @@ class AddActivity : AppCompatActivity() {
 
     }
 
-    private fun checkPermission(permission:String):Boolean{
-        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun checkSwitch(isChecked:Boolean){
-        if (isChecked){
-            Toast.makeText(this, "Auto detect location used", Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(this, "Auto detect location is not used", Toast.LENGTH_SHORT).show()
+    private fun checkSwitch(isChecked: Boolean) {
+        if (isChecked) {
+            Toast.makeText(this, getString(R.string.auto_detect_used), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, getString(R.string.auto_detect_is_not_used), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 }

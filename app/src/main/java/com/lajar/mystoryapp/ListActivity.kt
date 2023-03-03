@@ -7,14 +7,20 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.tabs.TabLayoutMediator
-import com.lajar.mystoryapp.Adapter.SectionsPagerAdapter
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.lajar.mystoryapp.ViewModel.ListViewModel
 import com.lajar.mystoryapp.ViewModel.ViewModelFactory
 import com.lajar.mystoryapp.databinding.ActivityListBinding
@@ -24,19 +30,14 @@ class ListActivity : AppCompatActivity() {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("user_info")
     private lateinit var listViewModel: ListViewModel
     private lateinit var binding: ActivityListBinding
-/*    private val adapter: ListStoriesAdapter =
-        ListStoriesAdapter(listOf(), object : ListStoriesAdapter.OnItemGetClicked {
-            override fun onClick(story: Story, sharedElementTransition: ActivityOptionsCompat) {
-                toDetailAct(story, sharedElementTransition)
-            }
-        })*/
+    private lateinit var navController:NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     companion object {
         const val ADD_ACTIVITY_RESULT = 100
-
         @StringRes
         private val TAB_TITLES = intArrayOf(
-            R.string.List,
+            R.string.stories,
             R.string.Map
         )
     }
@@ -45,7 +46,9 @@ class ListActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == ADD_ACTIVITY_RESULT) {
-            listViewModel.getStories()
+            val intent = Intent(this, ListActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -56,21 +59,12 @@ class ListActivity : AppCompatActivity() {
         setContentView(binding.root)
         listViewModel = obtainViewModel(this, dataStore)
         setInitialLayout()
-        /*listViewModel.listStories.observe(this) { result ->
-            checkResult(result)
-        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_logout, menu)
         return super.onCreateOptionsMenu(menu)
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        /*adapter.isAnItemHasBeenClicked = false*/
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -88,62 +82,66 @@ class ListActivity : AppCompatActivity() {
             R.id.add -> toAddAct()
 
         }
-
         return super.onOptionsItemSelected(item)
-
     }
 
-    private fun setInitialLayout(){
-        binding.apply {
-            val sectionsPagerAdapter = SectionsPagerAdapter(this@ListActivity)
-            viewPager.adapter = sectionsPagerAdapter
-            TabLayoutMediator(tablList, viewPager){tab, position ->
-                tab.text = getString(TAB_TITLES[position])
-            }.attach()
+    override fun onNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if(binding.bnvList.visibility == View.GONE){
+            binding.bnvList.visibility = View.VISIBLE
         }
     }
 
-   /* private fun checkResult(result: Result<List<Story>>) {
-        binding.apply {
-            when (result) {
-                is Result.Loading -> {
-                    tvListNoData.visibility = View.GONE
-                    pbList.visibility = View.VISIBLE
-                }
-                is Result.Success -> {
-                    pbList.visibility = View.GONE
-                    tvListNoData.visibility = View.GONE
-                    val listStories = result.data
-                    if (listStories.isEmpty()) {
-                        tvListNoData.visibility = View.VISIBLE
-                    } else {
-                        setLayout(listStories)
-                    }
+    private fun setInitialLayout() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        binding.bnvList.setupWithNavController(navController)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.nav_list, R.id.nav_map, R.id.nav_about)
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        /*setCurrentFragment(listFragment, false)
 
+        binding.bnvList.setOnItemSelectedListener{menuItem ->
+            val listFragmentInstance = supportFragmentManager.findFragmentByTag(ListFragment::class.java.simpleName)
+            val mapFragmentInstance = supportFragmentManager.findFragmentByTag(MapFragment::class.java.simpleName)
+            when(menuItem.itemId){
+                R.id.menu_bnv_list -> {
+                    if (listFragmentInstance!=null){
+                        setCurrentFragment(listFragmentInstance, true)
+                    }else setCurrentFragment(listFragment, false)
                 }
-                is Result.Error -> {
-                    pbList.visibility = View.GONE
-                    val messageEvent = result.error
-                    showToast(messageEvent)
-                    tvListNoData.visibility = View.VISIBLE
+                R.id.menu_bnv_map -> {
+                    if (mapFragmentInstance != null){
+                        setCurrentFragment(mapFragmentInstance, true)
+                    }else setCurrentFragment(mapFragment, false)
+                }
+                R.id.menu_bnv_about -> Toast.makeText(this, "Not Yet Created!", Toast.LENGTH_SHORT).show()
+            }
+            true
+        }*/
+    }
+
+/*    private fun setCurrentFragment(fragment:Fragment, getByTag:Boolean){
+        supportFragmentManager.commit {
+            when(fragment){
+                is ListFragment -> {
+                    if (getByTag){
+                        replace(R.id.container, fragment)
+                    }else replace(R.id.container, fragment, ListFragment::class.java.simpleName).addToBackStack(null)
+                }
+                is MapFragment -> {
+                    if (getByTag){
+                        replace(R.id.container, fragment)
+                    }else replace(R.id.container, fragment, MapFragment::class.java.simpleName).addToBackStack(null)
                 }
             }
-        }
-    }*/
 
-    /*private fun setLayout(stories: List<Story>) {
-        binding.apply {
-            adapter.updateList(stories)
-            rvListStory.adapter = adapter
-            rvListStory.layoutManager = LinearLayoutManager(this@ListActivity)
-            rvListStory.setHasFixedSize(true)
         }
-    }*/
-
-    /*private fun toDetailAct(story: Story, sharedElementTransition: ActivityOptionsCompat) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra(DetailActivity.EXTRA_STORY, story)
-        startActivity(intent, sharedElementTransition.toBundle())
     }*/
 
     private fun toAddAct() {
@@ -155,19 +153,12 @@ class ListActivity : AppCompatActivity() {
         activity: AppCompatActivity,
         dataStore: DataStore<Preferences>
     ): ListViewModel {
-        val factory = ViewModelFactory.getInstance(dataStore)
+        val factory = ViewModelFactory.getInstance(activity.application, dataStore)
         return ViewModelProvider(activity, factory)[ListViewModel::class.java]
     }
 
-
-    fun setUserInputEnabledViewPager(isUserInputEnabled:Boolean){
-        binding.viewPager.isUserInputEnabled = isUserInputEnabled
+    fun setBottomNavigationViewVisibility(isVisible:Boolean){
+        binding.bnvList.isVisible = isVisible
     }
 
-    /*private fun showToast(messageEvent: Event<String>) {
-        val message = messageEvent.getContentIfNotHandled()
-        if (message != null) {
-            Toast.makeText(this@ListActivity, message, Toast.LENGTH_SHORT).show()
-        }
-    }*/
 }

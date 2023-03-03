@@ -1,7 +1,6 @@
 package com.lajar.mystoryapp.ViewModel
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +10,7 @@ import com.lajar.mystoryapp.data.UserRepository
 import kotlinx.coroutines.launch
 import com.lajar.mystoryapp.data.Result
 
-class RegisterViewModel(dataStore: DataStore<Preferences>) : ViewModel() {
-    private val userRepository = UserRepository.getInstance(dataStore)
+class RegisterViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     private val _registerResponse = MutableLiveData<Result<Event<String>>>()
     val registerResponse: LiveData<Result<Event<String>>> = _registerResponse

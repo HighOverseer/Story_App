@@ -1,8 +1,7 @@
 package com.lajar.mystoryapp.ViewModel
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.*
+import com.lajar.mystoryapp.Helper.wrapEspressoIdlingResource
 import com.lajar.mystoryapp.data.Event
 import com.lajar.mystoryapp.data.UserRepository
 import com.lajar.mystoryapp.data.Result
@@ -10,8 +9,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginViewModel(dataStore: DataStore<Preferences>) : ViewModel() {
-    private val userRepository = UserRepository.getInstance(dataStore)
+class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     private val _loginResponse = MutableLiveData<Result<Event<String>>>()
     val loginResponse: LiveData<Result<Event<String>>> = _loginResponse

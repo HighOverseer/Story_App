@@ -1,9 +1,8 @@
 package com.lajar.mystoryapp.data
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import com.lajar.mystoryapp.Helper.wrapEspressoIdlingResource
 import com.lajar.mystoryapp.data.local.preference.UserPreference
-import com.lajar.mystoryapp.data.remote.ApiClient
+import com.lajar.mystoryapp.data.remote.ApiService
 import com.lajar.mystoryapp.data.remote.response.LoginResponse
 import com.lajar.mystoryapp.data.remote.response.Responses
 import kotlinx.coroutines.Dispatchers
@@ -11,9 +10,10 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 import retrofit2.awaitResponse
 
-class UserRepository private constructor(dataStore: DataStore<Preferences>) {
-    private val userPreference = UserPreference.getInstance(dataStore)
-    private val apiService = ApiClient.getApiService(dataStore)
+class UserRepository private constructor(
+    private val userPreference: UserPreference,
+    private val apiService: ApiService
+) {
 
     suspend fun register(
         name: String,
@@ -31,11 +31,13 @@ class UserRepository private constructor(dataStore: DataStore<Preferences>) {
 
     suspend fun login(email: String, password: String): Result<Response<LoginResponse>> =
         withContext(Dispatchers.IO) {
-            try {
-                val loginResponse = apiService.login(email, password).awaitResponse()
-                Result.Success(loginResponse)
-            } catch (e: Exception) {
-                Result.Error(Event(e.message.toString()))
+            wrapEspressoIdlingResource {
+                try {
+                    val loginResponse = apiService.login(email, password).awaitResponse()
+                    Result.Success(loginResponse)
+                } catch (e: Exception) {
+                    Result.Error(Event(e.message.toString()))
+                }
             }
         }
 
@@ -48,16 +50,16 @@ class UserRepository private constructor(dataStore: DataStore<Preferences>) {
     }
 
     suspend fun deleteToken() {
-        userPreference.deleteToken()
+        wrapEspressoIdlingResource { userPreference.deleteToken() }
     }
 
     companion object {
         @Volatile
         private var INSTANCE: UserRepository? = null
 
-        fun getInstance(dataStore: DataStore<Preferences>): UserRepository {
+        fun getInstance(userPreference: UserPreference, apiService: ApiService): UserRepository {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: UserRepository(dataStore)
+                INSTANCE ?: UserRepository(userPreference, apiService)
             }.also {
                 INSTANCE = it
             }

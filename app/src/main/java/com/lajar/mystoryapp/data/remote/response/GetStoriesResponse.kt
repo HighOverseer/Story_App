@@ -1,7 +1,7 @@
 package com.lajar.mystoryapp.data.remote.response
 
 import com.google.gson.annotations.SerializedName
-import com.lajar.mystoryapp.Model.Story
+import com.lajar.mystoryapp.data.local.entity.Story
 
 data class GetStoriesResponse(
     @field:SerializedName("error")

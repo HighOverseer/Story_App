@@ -12,6 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -52,11 +53,11 @@ interface ApiService {
         @Part
         file: MultipartBody.Part,
         @Part("lat")
-        lat:Float,
+        lat: Float,
         @Part("lon")
-        lon:Float
+        lon: Float
     ): Call<Responses>
 
     @GET("v1/stories")
-    fun getAllStories(): Call<GetStoriesResponse>
+    fun getAllStories(@Query("page") page: Int, @Query("size") size: Int): Call<GetStoriesResponse>
 }
